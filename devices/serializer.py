@@ -1,8 +1,14 @@
 from rest_framework import serializers
-from .models import Device
+from .models import Device, SensorData
 
 class DeviceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Device
         fields = ['id', 'name', 'location', 'is_active', 'created_at']
         read_only_fields =['id', 'created_at']
+
+class SensorDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SensorData
+        fields = ['id', 'device', 'value', 'unit', 'timestamp']
+        read_only_fields = ['id', 'timestamp']

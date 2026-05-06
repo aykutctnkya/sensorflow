@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'devices',
     'rest_framework_simplejwt',
     'django_filters',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -131,4 +132,15 @@ REST_FRAMEWORK = {
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.SearchFilter',
     ],
+}
+
+ASGI_APPLICATION = 'sensorflow.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1', 6379)],
+        },
+    },
 }

@@ -1,8 +1,10 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from .models import Device, SensorData
 from .serializers import DeviceSerializer, SensorDataSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 class DeviceViewSet(viewsets.ModelViewSet):
     queryset = Device.objects.all()
@@ -16,3 +18,21 @@ class SensorDataViewSet(viewsets.ModelViewSet):
     serializer_class = SensorDataSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['device']
+
+    def perform_create(self, serializer):
+        instance = serializer.save()
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            'sensor_data',
+            {
+                'type': 'sensor_data_message',
+                'data': {
+                    'device': str(instance.device.id),
+                    'value' : instance.value,
+                    'unit': instance.unit,
+                    'timestamp' : str(instance.timestamp),
+                    
+
+                }
+            }
+        )

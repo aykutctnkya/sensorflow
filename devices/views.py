@@ -1,8 +1,6 @@
-from django.shortcuts import render
 from rest_framework import viewsets
-from rest_framework.response import Response
 from .models import Device, SensorData
-from .serializer import DeviceSerializer, SensorDataSerializer
+from .serializers import DeviceSerializer, SensorDataSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
 

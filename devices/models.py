@@ -1,7 +1,7 @@
 from django.db import models
 import uuid
 
-class Devices(models.Model):
+class Device(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100)
     location = models.CharField(max_length=200, blank=True)

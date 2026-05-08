@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -80,11 +81,11 @@ WSGI_APPLICATION = 'sensorflow.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sensorflow',
-        'USER': 'sensorflow_user',
-        'PASSWORD': 'sensorflow_pass',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'NAME': os.environ.get('POSTGRES_DB', 'sensorflow'),
+        'USER': os.environ.get('POSTGRES_USER', 'sensorflow_user'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'sensorflow_pass'),
+        'HOST': os.environ.get('POSTGRES_HOST', '127.0.0.1'),
+        'PORT': os.environ.get('POSTGRES_PORT', '5432'),
     }
 }
 

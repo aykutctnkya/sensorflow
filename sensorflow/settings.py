@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'devices',
     'rest_framework_simplejwt',
     'django_filters',
-    'channels'
+    'channels',
+    'drf_spectacular'
 ]
 
 MIDDLEWARE = [
@@ -137,6 +138,7 @@ REST_FRAMEWORK = {
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.SearchFilter',
     ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 ASGI_APPLICATION = 'sensorflow.asgi.application'
@@ -148,4 +150,10 @@ CHANNEL_LAYERS = {
             'hosts': [('127.0.0.1', 6379)],
         },
     },
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'SensorFlow API',
+    'DESCRIPTION': 'IoT Sensor Dashboard API',
+    'Version': '1.0.0',
 }

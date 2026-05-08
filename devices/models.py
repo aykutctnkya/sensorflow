@@ -22,3 +22,23 @@ class SensorData(models.Model):
     
     class Meta:
         ordering = ['-timestamp']
+
+class Alert(models.Model):
+    SEVERITY_CHOICES = [
+        ('low','Low'),
+        ('medium', 'Medium'),
+        ('high', 'High'),
+    ]
+
+    device = models.ForeignKey(Device, on_delete=models.CASCADE, related_name='alerts')
+    sensor_data = models.ForeignKey(SensorData, on_delete=models.CASCADE, related_name='alerts')
+    message = models.TextField()
+    severity = models.CharField(max_length=10, choices=SEVERITY_CHOICES, default='medium')
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_resolved = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.device.name} - {self.severity} - {self.created_at}"
+    
+    class Meta:
+        ordering = ['-created_at']

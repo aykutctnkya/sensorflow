@@ -125,7 +125,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -157,3 +158,4 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'IoT Sensor Dashboard API',
     'Version': '1.0.0',
 }
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

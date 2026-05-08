@@ -2,6 +2,7 @@ import json
 import django
 import os
 import paho.mqtt.client as mqtt
+from devices.anomaly import check_anomaly
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sensorflow.settings')
 django.setup()
@@ -26,6 +27,7 @@ def on_message(client, userdata, msg):
             value=value,
             unit=unit
         )
+        check_anomaly(instance)
 
         from channels.layers import get_channel_layer
         from asgiref.sync import async_to_sync

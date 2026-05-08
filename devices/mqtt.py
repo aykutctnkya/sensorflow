@@ -1,18 +1,19 @@
 import json
 import django
 import os
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sensorflow.settings')
+django.setup()
 import paho.mqtt.client as mqtt
 from devices.anomaly import check_anomaly
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sensorflow.settings')
-django.setup()
+
 
 from devices.models import Device, SensorData
 
-def on_connect(client, userdata, flags, rc):
-    print(f"Connected to MQTT broker with code: {rc}")
+def on_connect(client, userdata, flags, reason_code, properties):
+    print(f"Connected to MQTT broker with code: {reason_code}")
     client.subscribe('sensors/#')
-
+    
 def on_message(client, userdata, msg):
     try:
         payload = json.loads(msg.payload.decode())
@@ -51,9 +52,9 @@ def on_message(client, userdata, msg):
     except Exception as e:
         print(f"Error: {type(e).__name__}: {e}")
 
-client = mqtt.Client()
+client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 client.on_connect = on_connect
 client.on_message = on_message
 
-client.connect('127.0.0.1', 1883,60)
+client.connect('mosquitto', 1883,60)
 client.loop_forever()

@@ -4,8 +4,8 @@ from rest_framework.filters import SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
-from .models import Device, SensorData
-from .serializers import DeviceSerializer, SensorDataSerializer
+from .models import Device, SensorData, Alert
+from .serializers import DeviceSerializer, SensorDataSerializer,AlertSerializer
 from .anomaly import check_anomaly
 
 class DeviceViewSet(viewsets.ModelViewSet):
@@ -39,3 +39,10 @@ class SensorDataViewSet(viewsets.ModelViewSet):
                 }
             }
         )
+
+class AlertViewSet(viewsets.ModelViewSet):
+    queryset = Alert.objects.all()
+    serializer_class = AlertSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filterset_fields = ['device', 'severity', 'is_resolved']
+    searchfilter = ['message']

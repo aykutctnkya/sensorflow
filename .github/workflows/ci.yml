@@ -54,4 +54,5 @@ jobs:
           POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
           DJANGO_SETTINGS_MODULE: sensorflow.settings
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: python manage.py test devices

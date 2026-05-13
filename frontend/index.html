@@ -1,0 +1,41 @@
+html<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SensorFlow Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>SensorFlow Dashboard</h1>
+        <div id="connection-status" class="status disconnected">Disconnected</div>
+    </header>
+
+    <div id="login-section">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+    </div>
+
+    <div id="dashboard" style="display: none;">
+        <section class="panel">
+            <h2>Devices</h2>
+            <div id="devices-list"></div>
+        </section>
+
+        <section class="panel">
+            <h2>Live Sensor Data</h2>
+            <div id="live-data"></div>
+        </section>
+
+        <section class="panel">
+            <h2>Recent Alerts</h2>
+            <div id="alerts-list"></div>
+        </section>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
